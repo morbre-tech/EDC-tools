@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        run: |
+          git config --global http.sslVerify false
+          git clone https://git.it.rm.dk:3000/${{ gitea.repository }} .
+          git checkout ${{ gitea.sha }}
 
       - name: Stop and remove existing container
         run: |
