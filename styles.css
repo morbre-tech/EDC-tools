@@ -218,6 +218,150 @@ button {
   gap: 12px;
 }
 
+.card--full {
+  grid-column: 1 / -1;
+  gap: 20px;
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.card__subtitle {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.toggle input {
+  width: 16px;
+  height: 16px;
+}
+
+.generator {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.generator__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.field textarea,
+.field select {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field legend {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.checkbox,
+.radio {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.checkbox input,
+.radio input {
+  width: 16px;
+  height: 16px;
+}
+
+.generator__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.generator__error {
+  color: #b91c1c;
+  font-weight: 600;
+  min-height: 1.2rem;
+}
+
+.output {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.output__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.output__header h3 {
+  font-size: 1.05rem;
+  color: #f8fafc;
+}
+
+.output__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.output__code {
+  margin-top: 12px;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  white-space: pre-wrap;
+  font-size: 0.9rem;
+}
+
+.explanation {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  color: var(--text);
+}
+
+.explanation h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
 .card h2 {
   font-size: 1.2rem;
 }
@@ -255,5 +399,10 @@ button {
   .ghost {
     width: 100%;
     justify-content: center;
+  }
+
+  .output__actions,
+  .generator__actions {
+    width: 100%;
   }
 }
