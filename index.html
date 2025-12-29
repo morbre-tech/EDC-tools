@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDC tools</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Hovedmenu">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span class="brand__text">EDC tools</span>
+        </div>
+
+        <nav class="sidebar__menu" aria-label="Sidebane menu">
+          <button class="menu-link is-active" type="button" data-target="powershell-generator">
+            PowerShell Workflow Generator
+          </button>
+
+          <div class="accordion">
+          <details class="accordion__item" open>
+            <summary class="accordion__trigger">
+              <span>AI tools</span>
+              <span class="accordion__icon" aria-hidden="true">▾</span>
+            </summary>
+            <div class="accordion__panel">
+              <button class="accordion__link" type="button" data-target="promptforbedring">
+                Promptforbedring
+              </button>
+              <button class="accordion__link" type="button" data-target="sammenligning">
+                Sammenligning af svar
+              </button>
+              <div class="accordion__subtext">
+                <span>ChatGPT vs. Claude</span>
+              </div>
+            </div>
+          </details>
+
+          <details class="accordion__item">
+            <summary class="accordion__trigger">
+              <span>Produktsuite</span>
+              <span class="accordion__icon" aria-hidden="true">▾</span>
+            </summary>
+            <div class="accordion__panel">
+              <button class="accordion__link" type="button" data-target="dashboard">
+                Dashboard
+              </button>
+              <button class="accordion__link" type="button" data-target="projekter">
+                Projekter
+              </button>
+              <button class="accordion__link" type="button" data-target="support">Support</button>
+            </div>
+          </details>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="hero">
+          <p class="hero__eyebrow">Velkommen</p>
+          <h1>EDC tools</h1>
+          <p class="hero__subtitle">EveryDayCarry tools</p>
+          <p>
+            En overskuelig platform til AI-værktøjer, der hjælper dig med at forbedre prompts og
+            sammenligne svar på tværs af ChatGPT og Claude.
+          </p>
+          <div class="hero__actions">
+            <button class="primary">Kom i gang</button>
+            <button class="ghost">Se guide</button>
+          </div>
+        </header>
+
+        <section class="cards" aria-live="polite">
+          <article class="card tool-section" id="promptforbedring" aria-hidden="true">
+            <h2>Promptforbedring</h2>
+            <p>
+              Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.
+            </p>
+          </article>
+          <article class="card tool-section" id="sammenligning" aria-hidden="true">
+            <h2>Sammenligning af svar</h2>
+            <p>
+              Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.
+            </p>
+          </article>
+          <article class="card tool-section" id="dashboard" aria-hidden="true">
+            <h2>Dashboard</h2>
+            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
+          </article>
+          <article class="card card--full tool-section is-active" id="powershell-generator">
+            <div class="card__header">
+              <div>
+                <h2>PowerShell Workflow Generator</h2>
+                <p class="card__subtitle">
+                  Beskriv din opgave, vælg miljø og standarder, og få et færdigt PowerShell-script.
+                </p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="best-practice" />
+                <span>Generér med best-practice</span>
+              </label>
+            </div>
+
+            <form class="generator" id="ps-generator">
+              <div class="generator__column">
+                <label class="field">
+                  <span>Opgavebeskrivelse</span>
+                  <textarea
+                    id="task-description"
+                    rows="4"
+                    placeholder="F.eks. ‘Opret 10 brugere fra CSV og tildel licens’"
+                  ></textarea>
+                </label>
+
+                <label class="field">
+                  <span>Miljøvalg</span>
+                  <select id="environment">
+                    <option>On-premises</option>
+                    <option>M365/Exchange Online</option>
+                    <option>Hybrid</option>
+                  </select>
+                </label>
+
+                <fieldset class="field">
+                  <legend>Script-standarder</legend>
+                  <label class="checkbox">
+                    <input type="checkbox" id="include-whatif" checked />
+                    <span>Inkludér -WhatIf og -Confirm</span>
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" id="include-logging" checked />
+                    <span>Inkludér logging til fil</span>
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" id="include-validation" checked />
+                    <span>Inkludér parameter-validering</span>
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" id="include-trycatch" checked />
+                    <span>Inkludér Try/Catch fejlhåndtering</span>
+                  </label>
+                </fieldset>
+
+                <fieldset class="field">
+                  <legend>Outputformat</legend>
+                  <label class="radio">
+                    <input type="radio" name="output-format" value="plain" checked />
+                    <span>Ren PowerShell</span>
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="output-format" value="commented" />
+                    <span>PowerShell + forklarende kommentarer</span>
+                  </label>
+                </fieldset>
+
+                <div class="generator__actions">
+                  <button class="primary" type="submit">Generér PowerShell</button>
+                  <button class="ghost" type="button" id="save-template">Gem som skabelon</button>
+                </div>
+                <p class="generator__error" id="generator-error" role="alert"></p>
+              </div>
+
+              <div class="generator__column">
+                <div class="output">
+                  <div class="output__header">
+                    <h3>Genereret script</h3>
+                    <div class="output__actions">
+                      <button class="ghost" type="button" id="copy-script">Kopier til clipboard</button>
+                      <button class="ghost" type="button" id="download-script">Download .ps1</button>
+                    </div>
+                  </div>
+                  <pre class="output__code" id="script-output">
+# Dit PowerShell-script vises her.
+                  </pre>
+                </div>
+                <div class="explanation">
+                  <h3>Forklaring</h3>
+                  <p id="script-explanation">
+                    Udfyld felterne og generér et script for at se en kort opsummering af flowet.
+                  </p>
+                </div>
+              </div>
+            </form>
+          </article>
+          <article class="card tool-section" id="projekter" aria-hidden="true">
+            <h2>Projekter</h2>
+            <p>Få overblik over igangværende projekter og samarbejde i realtid.</p>
+          </article>
+          <article class="card tool-section" id="support" aria-hidden="true">
+            <h2>Support</h2>
+            <p>Find hjælp, vidensbase og direkte kontakt til supportteamet.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
