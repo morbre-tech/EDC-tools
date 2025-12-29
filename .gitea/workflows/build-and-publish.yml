@@ -6,24 +6,24 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: podman-dev
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Stop and remove existing container
         run: |
-          podman stop edc-tools 2>/dev/null || true
-          podman rm edc-tools 2>/dev/null || true
+          docker stop edc-tools 2>/dev/null || true
+          docker rm edc-tools 2>/dev/null || true
 
       - name: Build container image
         run: |
-          podman build -t localhost/edc-tools:latest .
-          podman build -t localhost/edc-tools:${{ gitea.sha }} .
+          docker build -t localhost/edc-tools:latest .
+          docker build -t localhost/edc-tools:${{ gitea.sha }} .
 
       - name: Deploy container
         run: |
-          podman run -d \
+          docker run -d \
             --name edc-tools \
             -p 8080:80 \
             --restart=always \
@@ -37,4 +37,4 @@ jobs:
 
       - name: Cleanup old images
         run: |
-          podman image prune -f
+          docker image prune -f
