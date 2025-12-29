@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDC tools</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Hovedmenu">
+        <div class="brand">
+          <span class="brand__dot" aria-hidden="true"></span>
+          <span class="brand__text">EDC tools</span>
+        </div>
+
+        <nav class="accordion" aria-label="Sidebane menu">
+          <details class="accordion__item" open>
+            <summary class="accordion__trigger">
+              <span>AI tools</span>
+              <span class="accordion__icon" aria-hidden="true">▾</span>
+            </summary>
+            <div class="accordion__panel">
+              <a class="accordion__link" href="#promptforbedring">Promptforbedring</a>
+              <a class="accordion__link" href="#sammenligning">Sammenligning af svar</a>
+              <div class="accordion__subtext">
+                <span>ChatGPT vs. Claude</span>
+              </div>
+            </div>
+          </details>
+
+          <details class="accordion__item">
+            <summary class="accordion__trigger">
+              <span>Produktsuite</span>
+              <span class="accordion__icon" aria-hidden="true">▾</span>
+            </summary>
+            <div class="accordion__panel">
+              <a class="accordion__link" href="#dashboard">Dashboard</a>
+              <a class="accordion__link" href="#projekter">Projekter</a>
+              <a class="accordion__link" href="#support">Support</a>
+            </div>
+          </details>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="hero">
+          <p class="hero__eyebrow">Velkommen</p>
+          <h1>EDC tools</h1>
+          <p class="hero__subtitle">EveryDayCarry tools</p>
+          <p>
+            En overskuelig platform til AI-værktøjer, der hjælper dig med at forbedre prompts og
+            sammenligne svar på tværs af ChatGPT og Claude.
+          </p>
+          <div class="hero__actions">
+            <button class="primary">Kom i gang</button>
+            <button class="ghost">Se guide</button>
+          </div>
+        </header>
+
+        <section class="cards">
+          <article class="card" id="promptforbedring">
+            <h2>Promptforbedring</h2>
+            <p>
+              Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.
+            </p>
+          </article>
+          <article class="card" id="sammenligning">
+            <h2>Sammenligning af svar</h2>
+            <p>
+              Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.
+            </p>
+          </article>
+          <article class="card" id="dashboard">
+            <h2>Dashboard</h2>
+            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+  </body>
+</html>
