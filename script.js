@@ -163,3 +163,26 @@ form.addEventListener("submit", handleGenerate);
 copyButton.addEventListener("click", copyScript);
 downloadButton.addEventListener("click", downloadScript);
 saveTemplateButton.addEventListener("click", saveTemplate);
+
+const toolSections = document.querySelectorAll(".tool-section");
+const menuButtons = document.querySelectorAll("[data-target]");
+
+const setActiveSection = (sectionId) => {
+  toolSections.forEach((section) => {
+    const isActive = section.id === sectionId;
+    section.classList.toggle("is-active", isActive);
+    section.setAttribute("aria-hidden", (!isActive).toString());
+  });
+
+  menuButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.target === sectionId);
+  });
+};
+
+menuButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setActiveSection(button.dataset.target);
+  });
+});
+
+setActiveSection("powershell-generator");

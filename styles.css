@@ -55,6 +55,37 @@ body {
   box-shadow: 0 0 12px var(--accent-light);
 }
 
+.sidebar__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-link {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid transparent;
+  color: #f9fafb;
+  border-radius: 14px;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.menu-link:hover,
+.menu-link:focus {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+.menu-link.is-active {
+  background: rgba(79, 70, 229, 0.25);
+  border-color: rgba(79, 70, 229, 0.6);
+}
+
 .accordion {
   display: flex;
   flex-direction: column;
@@ -109,10 +140,25 @@ body {
 }
 
 .accordion__link {
+  background: none;
+  border: none;
   color: #e5e7eb;
   text-decoration: none;
   font-size: 0.95rem;
   padding: 6px 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordion__link:hover,
+.accordion__link:focus {
+  color: #ffffff;
+  outline: none;
+}
+
+.accordion__link.is-active {
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .accordion__link:hover {
@@ -203,6 +249,19 @@ button {
 }
 
 .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tool-section {
+  display: none;
+}
+
+.tool-section.is-active {
+  display: flex;
+}
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
@@ -216,6 +275,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .card--full {

@@ -14,6 +14,12 @@
           <span class="brand__text">EDC tools</span>
         </div>
 
+        <nav class="sidebar__menu" aria-label="Sidebane menu">
+          <button class="menu-link is-active" type="button" data-target="powershell-generator">
+            PowerShell Workflow Generator
+          </button>
+
+          <div class="accordion">
         <nav class="accordion" aria-label="Sidebane menu">
           <details class="accordion__item" open>
             <summary class="accordion__trigger">
@@ -21,6 +27,12 @@
               <span class="accordion__icon" aria-hidden="true">▾</span>
             </summary>
             <div class="accordion__panel">
+              <button class="accordion__link" type="button" data-target="promptforbedring">
+                Promptforbedring
+              </button>
+              <button class="accordion__link" type="button" data-target="sammenligning">
+                Sammenligning af svar
+              </button>
               <a class="accordion__link" href="#promptforbedring">Promptforbedring</a>
               <a class="accordion__link" href="#sammenligning">Sammenligning af svar</a>
               <div class="accordion__subtext">
@@ -35,6 +47,16 @@
               <span class="accordion__icon" aria-hidden="true">▾</span>
             </summary>
             <div class="accordion__panel">
+              <button class="accordion__link" type="button" data-target="dashboard">
+                Dashboard
+              </button>
+              <button class="accordion__link" type="button" data-target="projekter">
+                Projekter
+              </button>
+              <button class="accordion__link" type="button" data-target="support">Support</button>
+            </div>
+          </details>
+          </div>
               <a class="accordion__link" href="#dashboard">Dashboard</a>
               <a class="accordion__link" href="#projekter">Projekter</a>
               <a class="accordion__link" href="#support">Support</a>
@@ -58,6 +80,8 @@
           </div>
         </header>
 
+        <section class="cards" aria-live="polite">
+          <article class="card tool-section" id="promptforbedring" aria-hidden="true">
         <section class="cards">
           <article class="card" id="promptforbedring">
             <h2>Promptforbedring</h2>
@@ -65,12 +89,18 @@
               Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.
             </p>
           </article>
+          <article class="card tool-section" id="sammenligning" aria-hidden="true">
           <article class="card" id="sammenligning">
             <h2>Sammenligning af svar</h2>
             <p>
               Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.
             </p>
           </article>
+          <article class="card tool-section" id="dashboard" aria-hidden="true">
+            <h2>Dashboard</h2>
+            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
+          </article>
+          <article class="card card--full tool-section is-active" id="powershell-generator">
           <article class="card" id="dashboard">
             <h2>Dashboard</h2>
             <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
@@ -169,6 +199,14 @@
                 </div>
               </div>
             </form>
+          </article>
+          <article class="card tool-section" id="projekter" aria-hidden="true">
+            <h2>Projekter</h2>
+            <p>Få overblik over igangværende projekter og samarbejde i realtid.</p>
+          </article>
+          <article class="card tool-section" id="support" aria-hidden="true">
+            <h2>Support</h2>
+            <p>Find hjælp, vidensbase og direkte kontakt til supportteamet.</p>
           </article>
         </section>
       </main>
