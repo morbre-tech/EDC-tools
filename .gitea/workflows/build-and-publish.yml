@@ -1,0 +1,43 @@
+name: Build and Deploy EDC-tools
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: podman-dev
+    steps:
+      - name: Checkout code
+        run: |
+          git config --global http.sslVerify false
+          git clone https://gitea:${{ github.token }}@git.it.rm.dk:3000/${{ gitea.repository }} .
+          git checkout ${{ gitea.sha }}
+
+      - name: Stop and remove existing container
+        run: |
+          docker stop edc-tools 2>/dev/null || true
+          docker rm edc-tools 2>/dev/null || true
+
+      - name: Build container image
+        run: |
+          docker build -t localhost/edc-tools:latest .
+          docker build -t localhost/edc-tools:${{ gitea.sha }} .
+
+      - name: Deploy container
+        run: |
+          docker run -d \
+            --name edc-tools \
+            -p 8080:80 \
+            --restart=always \
+            localhost/edc-tools:latest
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          curl -f http://localhost:8080 || exit 1
+          echo "✅ EDC-tools deployed successfully at http://localhost:8080"
+
+      - name: Cleanup old images
+        run: |
+          docker image prune -f

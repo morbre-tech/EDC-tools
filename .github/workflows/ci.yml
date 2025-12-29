@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    name: Validate & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate HTML
+        run: |
+          echo "✅ Validating HTML files..."
+          # Check that HTML files exist
+          test -f index.html || exit 1
+          # Basic syntax check
+          grep -q "<!DOCTYPE html>" index.html || exit 1
+          grep -q "</html>" index.html || exit 1
+          echo "✅ HTML validation passed"
+
+      - name: Validate CSS
+        run: |
+          echo "✅ Validating CSS files..."
+          test -f styles.css || exit 1
+          echo "✅ CSS validation passed"
+
+      - name: Build Docker image
+        run: |
+          echo "✅ Building Docker image..."
+          docker build -t edc-tools:test .
+          echo "✅ Docker build successful"
+
+      - name: Test Docker image
+        run: |
+          echo "✅ Testing Docker container..."
+          docker run -d --name edc-test -p 8080:80 edc-tools:test
+          sleep 5
+          curl -f http://localhost:8080 || exit 1
+          docker stop edc-test
+          docker rm edc-test
+          echo "✅ Container test passed"
+
+      - name: Summary
+        run: |
+          echo "🎉 All checks passed!"
+          echo "✅ HTML validated"
+          echo "✅ CSS validated"
+          echo "✅ Docker build successful"
+          echo "✅ Container tested"
+          echo ""
+          echo "Ready to deploy via Gitea mirror → Podman"
