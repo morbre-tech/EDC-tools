@@ -1,0 +1,94 @@
+name: mirror-from-github
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"   # hver 5. minut
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Prepare CA + Git TLS config (explicit)
+        shell: bash
+        env:
+          CA_PEM: ${{ secrets.CA_PEM }}
+          CA_PEM_B64: ${{ secrets.CA_PEM_B64 }}
+        run: |
+          set -euo pipefail
+
+          # Avoid "master" hint
+          git config --global init.defaultBranch main
+
+          ca_path="/tmp/internal-ca.crt"
+
+          if [ -n "${CA_PEM:-}" ]; then
+            printf '%s\n' "$CA_PEM" > "$ca_path"
+          elif [ -n "${CA_PEM_B64:-}" ]; then
+            printf '%s' "$CA_PEM_B64" | base64 -d > "$ca_path"
+          else
+            echo "::error::Missing CA secret. Provide CA_PEM or CA_PEM_B64."
+            exit 1
+          fi
+
+          chmod 0644 "$ca_path"
+
+          # Force git to use this CA explicitly
+          git config --global http.sslCAInfo "$ca_path"
+          echo "GIT_SSL_CAINFO=$ca_path" >> "$GITHUB_ENV"
+
+          echo "Using CA at: $(git config --global --get http.sslCAInfo)"
+
+      - name: Mirror GitHub -> Gitea (branches + tags + PRs as branches)
+        shell: bash
+        env:
+          SRC_URL: ${{ secrets.SRC_URL }}
+          SRC_TOKEN: ${{ secrets.SRC_TOKEN }}
+          PUSH_USER: ${{ secrets.PUSH_USER }}
+          PUSH_TOKEN: ${{ secrets.PUSH_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SRC_URL:-}" ]; then
+            echo "::error::SRC_URL missing"
+            exit 1
+          fi
+          if [ -z "${PUSH_USER:-}" ] || [ -z "${PUSH_TOKEN:-}" ]; then
+            echo "::error::Missing PUSH_USER and/or PUSH_TOKEN"
+            exit 1
+          fi
+
+          # Source (GitHub)
+          src="$SRC_URL"
+          if [ -n "${SRC_TOKEN:-}" ]; then
+            src="${SRC_URL/https:\/\/github.com/https:\/\/x-access-token:${SRC_TOKEN}@github.com}"
+          fi
+
+          # Target (this Gitea repo) with auth
+          origin_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          origin_url_auth="${origin_url/https:\/\//https:\/\/${PUSH_USER}:${PUSH_TOKEN}@}"
+
+          rm -rf mirror.git
+          git init --bare mirror.git
+          cd mirror.git
+
+          git remote add source "$src"
+
+          # Fetch branches + tags
+          git fetch --prune source \
+            '+refs/heads/*:refs/heads/*' \
+            '+refs/tags/*:refs/tags/*'
+
+          # Fetch GitHub PR heads as branches: pr/<id>
+          git fetch --prune source \
+            '+refs/pull/*/head:refs/heads/pr/*'
+
+          git remote add origin "$origin_url_auth"
+
+          # Push branches + tags + PR branches
+          git push --prune origin \
+            '+refs/heads/*:refs/heads/*' \
+            '+refs/tags/*:refs/tags/*'
+
+          echo "Mirror completed successfully."

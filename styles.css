@@ -161,6 +161,10 @@ body {
   font-weight: 600;
 }
 
+.accordion__link:hover {
+  color: #ffffff;
+}
+
 .accordion__subtext {
   font-size: 0.85rem;
   color: #9ca3af;
@@ -256,6 +260,11 @@ button {
 
 .tool-section.is-active {
   display: flex;
+}
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .card {
