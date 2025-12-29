@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         run: |
           git config --global http.sslVerify false
-          git clone https://git.it.rm.dk:3000/${{ gitea.repository }} .
+          git clone https://gitea:${{ github.token }}@git.it.rm.dk:3000/${{ gitea.repository }} .
           git checkout ${{ gitea.sha }}
 
       - name: Stop and remove existing container
