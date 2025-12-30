@@ -44,16 +44,21 @@
       <main class="content">
         <header class="welcome-header">
           <div class="welcome-header__text">
-            <span class="welcome-header__label">_</span>
-            <h1>EDC<span class="accent">tools</span></h1>
+            <span class="welcome-header__label">Velkommen til</span>
+            <h1>EDC tools</h1>
           </div>
-          <p class="tagline">Vælg et værktøj i menuen for at komme i gang</p>
+          <p>Vælg et værktøj i menuen for at komme i gang.</p>
         </header>
 
         <section id="page-powershell" class="page">
           <div class="page-card">
             <div class="page-card__header">
-              <h2><span class="code-prefix">&gt;</span> PowerShell Generator</h2>
+              <div>
+                <h2>PowerShell Workflow Generator</h2>
+                <p class="page-card__subtitle">
+                  Beskriv din opgave, vælg miljø og standarder, og få et færdigt PowerShell-script.
+                </p>
+              </div>
               <label class="toggle">
                 <input type="checkbox" id="best-practice" checked />
                 <span>Best practice</span>
@@ -66,75 +71,57 @@
                   <span class="field__label">Opgavebeskrivelse</span>
                   <textarea
                     id="task-description"
-                    rows="3"
+                    rows="4"
                     placeholder="Beskriv hvad scriptet skal gøre..."
                   ></textarea>
                 </label>
 
-                <div class="field-row">
-                  <label class="field">
-                    <span class="field__label">Miljø</span>
-                    <select id="environment">
-                      <option>On-premises</option>
-                      <option>M365/Exchange Online</option>
-                      <option>Hybrid</option>
-                    </select>
-                  </label>
-                </div>
+                <label class="field">
+                  <span class="field__label">Miljø</span>
+                  <select id="environment">
+                    <option>On-premises</option>
+                    <option>M365/Exchange Online</option>
+                    <option>Hybrid</option>
+                  </select>
+                </label>
 
-                <fieldset class="field field--options">
-                  <legend class="field__label">Inkludér</legend>
+                <fieldset class="field">
+                  <legend class="field__label">Inkludér i script</legend>
                   <div class="checkbox-grid">
                     <label class="checkbox">
                       <input type="checkbox" id="include-whatif" checked />
-                      <span>-WhatIf</span>
+                      <span>-WhatIf og -Confirm</span>
                     </label>
                     <label class="checkbox">
                       <input type="checkbox" id="include-logging" checked />
-                      <span>Logging</span>
+                      <span>Logging til fil</span>
                     </label>
                     <label class="checkbox">
                       <input type="checkbox" id="include-validation" checked />
-                      <span>Validering</span>
+                      <span>Parameter-validering</span>
                     </label>
                     <label class="checkbox">
                       <input type="checkbox" id="include-trycatch" checked />
-                      <span>Try/Catch</span>
+                      <span>Try/Catch fejlhåndtering</span>
                     </label>
                   </div>
                 </fieldset>
 
                 <div class="generator__actions">
                   <button class="btn btn--primary" type="button" id="generate-btn">Generér script</button>
-                  <button class="btn btn--ghost" type="button" id="copy-script">Kopiér</button>
-                  <button class="btn btn--ghost" type="button" id="download-script">Download</button>
+                  <button class="btn btn--secondary" type="button" id="copy-script">Kopiér</button>
+                  <button class="btn btn--secondary" type="button" id="download-script">Download</button>
                 </div>
               </div>
 
               <div class="generator__output">
-                <div class="terminal">
-                  <div class="terminal__header">
-                    <span class="terminal__dots">
-                      <span></span><span></span><span></span>
-                    </span>
-                    <span class="terminal__title">output.ps1</span>
+                <div class="output-box">
+                  <div class="output-box__header">
+                    <span>Genereret script</span>
+                    <span class="output-box__filename">output.ps1</span>
                   </div>
-                  <pre class="terminal__code" id="script-output"># Skriv en opgavebeskrivelse og klik "Generér script"
-# Dit PowerShell-script vises her...
-
-<# EKSEMPEL OUTPUT:
-param(
-    [Parameter(Mandatory=$true)]
-    [string]$InputPath
-)
-
-try {
-    # Script logic here
-    Write-Host "Executing..." -ForegroundColor Cyan
-} catch {
-    Write-Error $_.Exception.Message
-}
-#></pre>
+                  <pre class="output-box__code" id="script-output"># Skriv en opgavebeskrivelse og klik "Generér script"
+# Dit PowerShell-script vises her...</pre>
                 </div>
               </div>
             </div>
@@ -142,37 +129,37 @@ try {
         </section>
 
         <section id="page-promptforbedring" class="page">
-          <div class="page-card">
-            <h2><span class="code-prefix">&gt;</span> Promptforbedring</h2>
-            <p>Få forslag til bedre promptstruktur, tone og kontekst.</p>
+          <div class="page-card page-card--empty">
+            <h2>Promptforbedring</h2>
+            <p>Kommer snart...</p>
           </div>
         </section>
 
         <section id="page-sammenligning" class="page">
-          <div class="page-card">
-            <h2><span class="code-prefix">&gt;</span> Sammenligning af svar</h2>
-            <p>Se side-om-side output fra ChatGPT og Claude.</p>
+          <div class="page-card page-card--empty">
+            <h2>Sammenligning af svar</h2>
+            <p>Kommer snart...</p>
           </div>
         </section>
 
         <section id="page-dashboard" class="page">
-          <div class="page-card">
-            <h2><span class="code-prefix">&gt;</span> Dashboard</h2>
-            <p>Hold styr på dine mest brugte prompts og performance.</p>
+          <div class="page-card page-card--empty">
+            <h2>Dashboard</h2>
+            <p>Kommer snart...</p>
           </div>
         </section>
 
         <section id="page-projekter" class="page">
-          <div class="page-card">
-            <h2><span class="code-prefix">&gt;</span> Projekter</h2>
-            <p>Organiser dine prompts og workflows i projekter.</p>
+          <div class="page-card page-card--empty">
+            <h2>Projekter</h2>
+            <p>Kommer snart...</p>
           </div>
         </section>
 
         <section id="page-support" class="page">
-          <div class="page-card">
-            <h2><span class="code-prefix">&gt;</span> Support</h2>
-            <p>Få hjælp og vejledning til brug af EDC tools.</p>
+          <div class="page-card page-card--empty">
+            <h2>Support</h2>
+            <p>Kommer snart...</p>
           </div>
         </section>
       </main>
@@ -197,12 +184,10 @@ try {
             l.classList.remove('active');
           });
           link.classList.add('active');
-
-          document.querySelector('.welcome-header').classList.add('compact');
         });
       });
 
-      // Demo: Generate sample script
+      // Generate script
       document.getElementById('generate-btn')?.addEventListener('click', () => {
         const desc = document.getElementById('task-description').value || 'Eksempel opgave';
         const env = document.getElementById('environment').value;
@@ -236,7 +221,6 @@ try {
         if ($WhatIf) {
             Write-Host "[WhatIf] Behandler: $($item.Name)" -ForegroundColor Yellow
         } else {
-            # Implementer logik her
             Write-Host "Behandler: $($item.Name)" -ForegroundColor Green
         }
     }
