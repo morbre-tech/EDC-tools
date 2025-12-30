@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: podman-dev
+    runs-on: podman-morbre
     steps:
       - name: Checkout code
         run: |
@@ -41,3 +41,4 @@ jobs:
       - name: Cleanup old images
         run: |
           docker image prune -f
+
