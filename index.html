@@ -51,78 +51,111 @@
         </header>
 
         <section id="page-powershell" class="page">
-          <div class="page-card">
-            <div class="page-card__header">
-              <div>
-                <h2>PowerShell Workflow Generator</h2>
-                <p class="page-card__subtitle">
-                  Beskriv din opgave, vælg miljø og standarder, og få et færdigt PowerShell-script.
-                </p>
+          <!-- Page Header -->
+          <div class="page-header">
+            <h2>PowerShell Workflow Generator</h2>
+            <p>Beskriv din opgave og få et færdigt PowerShell-script.</p>
+          </div>
+
+          <div class="generator-layout">
+            <!-- Left: Input Section -->
+            <div class="input-section">
+              <div class="input-card">
+                <div class="input-card__header">
+                  <span class="input-card__icon">1</span>
+                  <h3>Beskriv opgaven</h3>
+                </div>
+                <textarea
+                  id="task-description"
+                  class="input-textarea"
+                  rows="5"
+                  placeholder="Eksempel: Opret 10 brugere fra en CSV-fil og tildel dem Microsoft 365 licenser..."
+                ></textarea>
               </div>
-              <label class="toggle">
-                <input type="checkbox" id="best-practice" checked />
-                <span>Best practice</span>
-              </label>
+
+              <div class="input-card">
+                <div class="input-card__header">
+                  <span class="input-card__icon">2</span>
+                  <h3>Vælg miljø</h3>
+                </div>
+                <div class="option-buttons">
+                  <label class="option-btn">
+                    <input type="radio" name="environment" value="onprem" checked />
+                    <span>On-premises</span>
+                  </label>
+                  <label class="option-btn">
+                    <input type="radio" name="environment" value="m365" />
+                    <span>M365 / Exchange Online</span>
+                  </label>
+                  <label class="option-btn">
+                    <input type="radio" name="environment" value="hybrid" />
+                    <span>Hybrid</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="input-card">
+                <div class="input-card__header">
+                  <span class="input-card__icon">3</span>
+                  <h3>Script-indstillinger</h3>
+                </div>
+                <div class="toggle-list">
+                  <label class="toggle-item">
+                    <input type="checkbox" id="include-whatif" checked />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">-WhatIf og -Confirm support</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" id="include-logging" checked />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Logging til fil</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" id="include-validation" checked />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Parameter-validering</span>
+                  </label>
+                  <label class="toggle-item">
+                    <input type="checkbox" id="include-trycatch" checked />
+                    <span class="toggle-switch"></span>
+                    <span class="toggle-label">Try/Catch fejlhåndtering</span>
+                  </label>
+                </div>
+              </div>
+
+              <button class="btn-generate" type="button" id="generate-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Generér PowerShell script
+              </button>
             </div>
 
-            <div class="generator">
-              <div class="generator__input">
-                <label class="field">
-                  <span class="field__label">Opgavebeskrivelse</span>
-                  <textarea
-                    id="task-description"
-                    rows="4"
-                    placeholder="Beskriv hvad scriptet skal gøre..."
-                  ></textarea>
-                </label>
-
-                <label class="field">
-                  <span class="field__label">Miljø</span>
-                  <select id="environment">
-                    <option>On-premises</option>
-                    <option>M365/Exchange Online</option>
-                    <option>Hybrid</option>
-                  </select>
-                </label>
-
-                <fieldset class="field">
-                  <legend class="field__label">Inkludér i script</legend>
-                  <div class="checkbox-grid">
-                    <label class="checkbox">
-                      <input type="checkbox" id="include-whatif" checked />
-                      <span>-WhatIf og -Confirm</span>
-                    </label>
-                    <label class="checkbox">
-                      <input type="checkbox" id="include-logging" checked />
-                      <span>Logging til fil</span>
-                    </label>
-                    <label class="checkbox">
-                      <input type="checkbox" id="include-validation" checked />
-                      <span>Parameter-validering</span>
-                    </label>
-                    <label class="checkbox">
-                      <input type="checkbox" id="include-trycatch" checked />
-                      <span>Try/Catch fejlhåndtering</span>
-                    </label>
+            <!-- Right: Output Section -->
+            <div class="output-section">
+              <div class="output-card">
+                <div class="output-card__header">
+                  <span>Genereret script</span>
+                  <div class="output-actions">
+                    <button class="btn-action" type="button" id="copy-script" title="Kopiér til udklipsholder">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                      Kopiér
+                    </button>
+                    <button class="btn-action" type="button" id="download-script" title="Download som .ps1 fil">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Download
+                    </button>
                   </div>
-                </fieldset>
-
-                <div class="generator__actions">
-                  <button class="btn btn--primary" type="button" id="generate-btn">Generér script</button>
-                  <button class="btn btn--secondary" type="button" id="copy-script">Kopiér</button>
-                  <button class="btn btn--secondary" type="button" id="download-script">Download</button>
                 </div>
-              </div>
-
-              <div class="generator__output">
-                <div class="output-box">
-                  <div class="output-box__header">
-                    <span>Genereret script</span>
-                    <span class="output-box__filename">output.ps1</span>
-                  </div>
-                  <pre class="output-box__code" id="script-output"># Skriv en opgavebeskrivelse og klik "Generér script"
-# Dit PowerShell-script vises her...</pre>
-                </div>
+                <pre class="output-code" id="script-output"># Udfyld felterne til venstre og klik "Generér PowerShell script"
+# Dit script vises her...</pre>
               </div>
             </div>
           </div>
@@ -190,12 +223,14 @@
       // Generate script
       document.getElementById('generate-btn')?.addEventListener('click', () => {
         const desc = document.getElementById('task-description').value || 'Eksempel opgave';
-        const env = document.getElementById('environment').value;
+        const envRadio = document.querySelector('input[name="environment"]:checked');
+        const env = envRadio ? envRadio.nextElementSibling.textContent : 'On-premises';
         const output = document.getElementById('script-output');
 
         output.textContent = `# PowerShell Script Generator
 # Opgave: ${desc}
 # Miljø: ${env}
+# Genereret: ${new Date().toLocaleString('da-DK')}
 
 param(
     [Parameter(Mandatory=$true)]
