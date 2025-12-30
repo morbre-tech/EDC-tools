@@ -14,12 +14,6 @@
           <span class="brand__text">EDC tools</span>
         </div>
 
-        <nav class="sidebar__menu" aria-label="Sidebane menu">
-          <button class="menu-link is-active" type="button" data-target="powershell-generator">
-            PowerShell Workflow Generator
-          </button>
-
-          <div class="accordion">
         <nav class="accordion" aria-label="Sidebane menu">
           <details class="accordion__item" open>
             <summary class="accordion__trigger">
@@ -27,14 +21,9 @@
               <span class="accordion__icon" aria-hidden="true">▾</span>
             </summary>
             <div class="accordion__panel">
-              <button class="accordion__link" type="button" data-target="promptforbedring">
-                Promptforbedring
-              </button>
-              <button class="accordion__link" type="button" data-target="sammenligning">
-                Sammenligning af svar
-              </button>
-              <a class="accordion__link" href="#promptforbedring">Promptforbedring</a>
-              <a class="accordion__link" href="#sammenligning">Sammenligning af svar</a>
+              <a class="accordion__link active" href="#" data-page="powershell">PowerShell Workflow Generator</a>
+              <a class="accordion__link" href="#" data-page="promptforbedring">Promptforbedring</a>
+              <a class="accordion__link" href="#" data-page="sammenligning">Sammenligning af svar</a>
               <div class="accordion__subtext">
                 <span>ChatGPT vs. Claude</span>
               </div>
@@ -47,69 +36,29 @@
               <span class="accordion__icon" aria-hidden="true">▾</span>
             </summary>
             <div class="accordion__panel">
-              <button class="accordion__link" type="button" data-target="dashboard">
-                Dashboard
-              </button>
-              <button class="accordion__link" type="button" data-target="projekter">
-                Projekter
-              </button>
-              <button class="accordion__link" type="button" data-target="support">Support</button>
-            </div>
-          </details>
-          </div>
-              <a class="accordion__link" href="#dashboard">Dashboard</a>
-              <a class="accordion__link" href="#projekter">Projekter</a>
-              <a class="accordion__link" href="#support">Support</a>
+              <a class="accordion__link" href="#" data-page="dashboard">Dashboard</a>
+              <a class="accordion__link" href="#" data-page="projekter">Projekter</a>
+              <a class="accordion__link" href="#" data-page="support">Support</a>
             </div>
           </details>
         </nav>
       </aside>
 
       <main class="content">
-        <header class="hero">
-          <p class="hero__eyebrow">Velkommen</p>
-          <h1>EDC tools</h1>
-          <p class="hero__subtitle">EveryDayCarry tools</p>
-          <p>
-            En overskuelig platform til AI-værktøjer, der hjælper dig med at forbedre prompts og
-            sammenligne svar på tværs af ChatGPT og Claude.
-          </p>
-          <div class="hero__actions">
-            <button class="primary">Kom i gang</button>
-            <button class="ghost">Se guide</button>
+        <header class="welcome-header">
+          <div class="welcome-header__text">
+            <span class="welcome-header__label">Velkommen til</span>
+            <h1>EDC tools</h1>
           </div>
+          <p>En platform til AI-værktøjer – forbedre prompts og sammenlign svar.</p>
         </header>
 
-        <section class="cards" aria-live="polite">
-          <article class="card tool-section" id="promptforbedring" aria-hidden="true">
-        <section class="cards">
-          <article class="card" id="promptforbedring">
-            <h2>Promptforbedring</h2>
-            <p>
-              Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.
-            </p>
-          </article>
-          <article class="card tool-section" id="sammenligning" aria-hidden="true">
-          <article class="card" id="sammenligning">
-            <h2>Sammenligning af svar</h2>
-            <p>
-              Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.
-            </p>
-          </article>
-          <article class="card tool-section" id="dashboard" aria-hidden="true">
-            <h2>Dashboard</h2>
-            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
-          </article>
-          <article class="card card--full tool-section is-active" id="powershell-generator">
-          <article class="card" id="dashboard">
-            <h2>Dashboard</h2>
-            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
-          </article>
-          <article class="card card--full" id="powershell-generator">
-            <div class="card__header">
+        <section id="page-powershell" class="page active">
+          <div class="page-card page-card--full">
+            <div class="page-card__header">
               <div>
                 <h2>PowerShell Workflow Generator</h2>
-                <p class="card__subtitle">
+                <p class="page-card__subtitle">
                   Beskriv din opgave, vælg miljø og standarder, og få et færdigt PowerShell-script.
                 </p>
               </div>
@@ -126,7 +75,7 @@
                   <textarea
                     id="task-description"
                     rows="4"
-                    placeholder="F.eks. ‘Opret 10 brugere fra CSV og tildel licens’"
+                    placeholder="F.eks. 'Opret 10 brugere fra CSV og tildel licens'"
                   ></textarea>
                 </label>
 
@@ -187,9 +136,7 @@
                       <button class="ghost" type="button" id="download-script">Download .ps1</button>
                     </div>
                   </div>
-                  <pre class="output__code" id="script-output">
-# Dit PowerShell-script vises her.
-                  </pre>
+                  <pre class="output__code" id="script-output"># Dit PowerShell-script vises her.</pre>
                 </div>
                 <div class="explanation">
                   <h3>Forklaring</h3>
@@ -199,19 +146,85 @@
                 </div>
               </div>
             </form>
-          </article>
-          <article class="card tool-section" id="projekter" aria-hidden="true">
+          </div>
+        </section>
+
+        <section id="page-promptforbedring" class="page">
+          <div class="page-card">
+            <h2>Promptforbedring</h2>
+            <p>Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.</p>
+            <div class="page-card__actions">
+              <button class="primary">Forbedr prompt</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="page-sammenligning" class="page">
+          <div class="page-card">
+            <h2>Sammenligning af svar</h2>
+            <p>Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.</p>
+            <div class="page-card__actions">
+              <button class="primary">Sammenlign nu</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="page-dashboard" class="page">
+          <div class="page-card">
+            <h2>Dashboard</h2>
+            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
+            <div class="page-card__actions">
+              <button class="primary">Åbn dashboard</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="page-projekter" class="page">
+          <div class="page-card">
             <h2>Projekter</h2>
-            <p>Få overblik over igangværende projekter og samarbejde i realtid.</p>
-          </article>
-          <article class="card tool-section" id="support" aria-hidden="true">
+            <p>Organiser dine prompts og workflows i projekter for bedre overblik.</p>
+            <div class="page-card__actions">
+              <button class="primary">Se projekter</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="page-support" class="page">
+          <div class="page-card">
             <h2>Support</h2>
-            <p>Find hjælp, vidensbase og direkte kontakt til supportteamet.</p>
-          </article>
+            <p>Få hjælp og vejledning til brug af EDC tools.</p>
+            <div class="page-card__actions">
+              <button class="primary">Kontakt support</button>
+            </div>
+          </div>
         </section>
       </main>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      document.querySelectorAll('.accordion__link[data-page]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const pageId = link.dataset.page;
+
+          // Hide all pages
+          document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+          });
+
+          // Show selected page
+          const targetPage = document.getElementById('page-' + pageId);
+          if (targetPage) {
+            targetPage.classList.add('active');
+          }
+
+          // Update active link styling
+          document.querySelectorAll('.accordion__link').forEach(l => {
+            l.classList.remove('active');
+          });
+          link.classList.add('active');
+        });
+      });
+    </script>
   </body>
 </html>
