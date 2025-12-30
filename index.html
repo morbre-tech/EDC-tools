@@ -21,12 +21,9 @@
               <span class="accordion__icon" aria-hidden="true">▾</span>
             </summary>
             <div class="accordion__panel">
-              <a class="accordion__link active" href="#" data-page="powershell">PowerShell Workflow Generator</a>
+              <a class="accordion__link" href="#" data-page="powershell">PowerShell Workflow Generator</a>
               <a class="accordion__link" href="#" data-page="promptforbedring">Promptforbedring</a>
               <a class="accordion__link" href="#" data-page="sammenligning">Sammenligning af svar</a>
-              <div class="accordion__subtext">
-                <span>ChatGPT vs. Claude</span>
-              </div>
             </div>
           </details>
 
@@ -47,155 +44,135 @@
       <main class="content">
         <header class="welcome-header">
           <div class="welcome-header__text">
-            <span class="welcome-header__label">Velkommen til</span>
-            <h1>EDC tools</h1>
+            <span class="welcome-header__label">_</span>
+            <h1>EDC<span class="accent">tools</span></h1>
           </div>
-          <p>En platform til AI-værktøjer – forbedre prompts og sammenlign svar.</p>
+          <p class="tagline">Vælg et værktøj i menuen for at komme i gang</p>
         </header>
 
-        <section id="page-powershell" class="page active">
-          <div class="page-card page-card--full">
+        <section id="page-powershell" class="page">
+          <div class="page-card">
             <div class="page-card__header">
-              <div>
-                <h2>PowerShell Workflow Generator</h2>
-                <p class="page-card__subtitle">
-                  Beskriv din opgave, vælg miljø og standarder, og få et færdigt PowerShell-script.
-                </p>
-              </div>
+              <h2><span class="code-prefix">&gt;</span> PowerShell Generator</h2>
               <label class="toggle">
-                <input type="checkbox" id="best-practice" />
-                <span>Generér med best-practice</span>
+                <input type="checkbox" id="best-practice" checked />
+                <span>Best practice</span>
               </label>
             </div>
 
-            <form class="generator" id="ps-generator">
-              <div class="generator__column">
+            <div class="generator">
+              <div class="generator__input">
                 <label class="field">
-                  <span>Opgavebeskrivelse</span>
+                  <span class="field__label">Opgavebeskrivelse</span>
                   <textarea
                     id="task-description"
-                    rows="4"
-                    placeholder="F.eks. 'Opret 10 brugere fra CSV og tildel licens'"
+                    rows="3"
+                    placeholder="Beskriv hvad scriptet skal gøre..."
                   ></textarea>
                 </label>
 
-                <label class="field">
-                  <span>Miljøvalg</span>
-                  <select id="environment">
-                    <option>On-premises</option>
-                    <option>M365/Exchange Online</option>
-                    <option>Hybrid</option>
-                  </select>
-                </label>
+                <div class="field-row">
+                  <label class="field">
+                    <span class="field__label">Miljø</span>
+                    <select id="environment">
+                      <option>On-premises</option>
+                      <option>M365/Exchange Online</option>
+                      <option>Hybrid</option>
+                    </select>
+                  </label>
+                </div>
 
-                <fieldset class="field">
-                  <legend>Script-standarder</legend>
-                  <label class="checkbox">
-                    <input type="checkbox" id="include-whatif" checked />
-                    <span>Inkludér -WhatIf og -Confirm</span>
-                  </label>
-                  <label class="checkbox">
-                    <input type="checkbox" id="include-logging" checked />
-                    <span>Inkludér logging til fil</span>
-                  </label>
-                  <label class="checkbox">
-                    <input type="checkbox" id="include-validation" checked />
-                    <span>Inkludér parameter-validering</span>
-                  </label>
-                  <label class="checkbox">
-                    <input type="checkbox" id="include-trycatch" checked />
-                    <span>Inkludér Try/Catch fejlhåndtering</span>
-                  </label>
-                </fieldset>
-
-                <fieldset class="field">
-                  <legend>Outputformat</legend>
-                  <label class="radio">
-                    <input type="radio" name="output-format" value="plain" checked />
-                    <span>Ren PowerShell</span>
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="output-format" value="commented" />
-                    <span>PowerShell + forklarende kommentarer</span>
-                  </label>
+                <fieldset class="field field--options">
+                  <legend class="field__label">Inkludér</legend>
+                  <div class="checkbox-grid">
+                    <label class="checkbox">
+                      <input type="checkbox" id="include-whatif" checked />
+                      <span>-WhatIf</span>
+                    </label>
+                    <label class="checkbox">
+                      <input type="checkbox" id="include-logging" checked />
+                      <span>Logging</span>
+                    </label>
+                    <label class="checkbox">
+                      <input type="checkbox" id="include-validation" checked />
+                      <span>Validering</span>
+                    </label>
+                    <label class="checkbox">
+                      <input type="checkbox" id="include-trycatch" checked />
+                      <span>Try/Catch</span>
+                    </label>
+                  </div>
                 </fieldset>
 
                 <div class="generator__actions">
-                  <button class="primary" type="submit">Generér PowerShell</button>
-                  <button class="ghost" type="button" id="save-template">Gem som skabelon</button>
+                  <button class="btn btn--primary" type="button" id="generate-btn">Generér script</button>
+                  <button class="btn btn--ghost" type="button" id="copy-script">Kopiér</button>
+                  <button class="btn btn--ghost" type="button" id="download-script">Download</button>
                 </div>
-                <p class="generator__error" id="generator-error" role="alert"></p>
               </div>
 
-              <div class="generator__column">
-                <div class="output">
-                  <div class="output__header">
-                    <h3>Genereret script</h3>
-                    <div class="output__actions">
-                      <button class="ghost" type="button" id="copy-script">Kopier til clipboard</button>
-                      <button class="ghost" type="button" id="download-script">Download .ps1</button>
-                    </div>
+              <div class="generator__output">
+                <div class="terminal">
+                  <div class="terminal__header">
+                    <span class="terminal__dots">
+                      <span></span><span></span><span></span>
+                    </span>
+                    <span class="terminal__title">output.ps1</span>
                   </div>
-                  <pre class="output__code" id="script-output"># Dit PowerShell-script vises her.</pre>
-                </div>
-                <div class="explanation">
-                  <h3>Forklaring</h3>
-                  <p id="script-explanation">
-                    Udfyld felterne og generér et script for at se en kort opsummering af flowet.
-                  </p>
+                  <pre class="terminal__code" id="script-output"># Skriv en opgavebeskrivelse og klik "Generér script"
+# Dit PowerShell-script vises her...
+
+<# EKSEMPEL OUTPUT:
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$InputPath
+)
+
+try {
+    # Script logic here
+    Write-Host "Executing..." -ForegroundColor Cyan
+} catch {
+    Write-Error $_.Exception.Message
+}
+#></pre>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </section>
 
         <section id="page-promptforbedring" class="page">
           <div class="page-card">
-            <h2>Promptforbedring</h2>
-            <p>Få forslag til bedre promptstruktur, tone og kontekst, så du får mere præcise svar.</p>
-            <div class="page-card__actions">
-              <button class="primary">Forbedr prompt</button>
-            </div>
+            <h2><span class="code-prefix">&gt;</span> Promptforbedring</h2>
+            <p>Få forslag til bedre promptstruktur, tone og kontekst.</p>
           </div>
         </section>
 
         <section id="page-sammenligning" class="page">
           <div class="page-card">
-            <h2>Sammenligning af svar</h2>
-            <p>Se side-om-side output fra ChatGPT og Claude, og spot styrker, svagheder og tone.</p>
-            <div class="page-card__actions">
-              <button class="primary">Sammenlign nu</button>
-            </div>
+            <h2><span class="code-prefix">&gt;</span> Sammenligning af svar</h2>
+            <p>Se side-om-side output fra ChatGPT og Claude.</p>
           </div>
         </section>
 
         <section id="page-dashboard" class="page">
           <div class="page-card">
-            <h2>Dashboard</h2>
-            <p>Hold styr på dine mest brugte prompts og den seneste performance.</p>
-            <div class="page-card__actions">
-              <button class="primary">Åbn dashboard</button>
-            </div>
+            <h2><span class="code-prefix">&gt;</span> Dashboard</h2>
+            <p>Hold styr på dine mest brugte prompts og performance.</p>
           </div>
         </section>
 
         <section id="page-projekter" class="page">
           <div class="page-card">
-            <h2>Projekter</h2>
-            <p>Organiser dine prompts og workflows i projekter for bedre overblik.</p>
-            <div class="page-card__actions">
-              <button class="primary">Se projekter</button>
-            </div>
+            <h2><span class="code-prefix">&gt;</span> Projekter</h2>
+            <p>Organiser dine prompts og workflows i projekter.</p>
           </div>
         </section>
 
         <section id="page-support" class="page">
           <div class="page-card">
-            <h2>Support</h2>
+            <h2><span class="code-prefix">&gt;</span> Support</h2>
             <p>Få hjælp og vejledning til brug af EDC tools.</p>
-            <div class="page-card__actions">
-              <button class="primary">Kontakt support</button>
-            </div>
           </div>
         </section>
       </main>
@@ -207,23 +184,86 @@
           e.preventDefault();
           const pageId = link.dataset.page;
 
-          // Hide all pages
           document.querySelectorAll('.page').forEach(page => {
             page.classList.remove('active');
           });
 
-          // Show selected page
           const targetPage = document.getElementById('page-' + pageId);
           if (targetPage) {
             targetPage.classList.add('active');
           }
 
-          // Update active link styling
           document.querySelectorAll('.accordion__link').forEach(l => {
             l.classList.remove('active');
           });
           link.classList.add('active');
+
+          document.querySelector('.welcome-header').classList.add('compact');
         });
+      });
+
+      // Demo: Generate sample script
+      document.getElementById('generate-btn')?.addEventListener('click', () => {
+        const desc = document.getElementById('task-description').value || 'Eksempel opgave';
+        const env = document.getElementById('environment').value;
+        const output = document.getElementById('script-output');
+
+        output.textContent = `# PowerShell Script Generator
+# Opgave: ${desc}
+# Miljø: ${env}
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$InputPath,
+
+    [Parameter()]
+    [switch]$WhatIf
+)
+
+#Requires -Version 5.1
+
+try {
+    Write-Host "Starting script execution..." -ForegroundColor Cyan
+
+    # Validering
+    if (-not (Test-Path $InputPath)) {
+        throw "Filen findes ikke: $InputPath"
+    }
+
+    # Hovedlogik
+    $data = Import-Csv -Path $InputPath
+    foreach ($item in $data) {
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Behandler: $($item.Name)" -ForegroundColor Yellow
+        } else {
+            # Implementer logik her
+            Write-Host "Behandler: $($item.Name)" -ForegroundColor Green
+        }
+    }
+
+    Write-Host "Script fuldført!" -ForegroundColor Green
+} catch {
+    Write-Error $_.Exception.Message
+    exit 1
+}`;
+      });
+
+      // Copy to clipboard
+      document.getElementById('copy-script')?.addEventListener('click', () => {
+        const code = document.getElementById('script-output').textContent;
+        navigator.clipboard.writeText(code);
+      });
+
+      // Download script
+      document.getElementById('download-script')?.addEventListener('click', () => {
+        const code = document.getElementById('script-output').textContent;
+        const blob = new Blob([code], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'script.ps1';
+        a.click();
+        URL.revokeObjectURL(url);
       });
     </script>
   </body>
