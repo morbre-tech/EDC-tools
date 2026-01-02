@@ -1,0 +1,16 @@
+{
+  "name": "edc-tools",
+  "version": "1.0.0",
+  "description": "AI-powered PowerShell script generator",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build required'",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "openai": "^4.20.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

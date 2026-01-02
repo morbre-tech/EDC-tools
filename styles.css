@@ -424,12 +424,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Output Section */
-.output-section {
-  position: sticky;
-  top: 32px;
-}
-
 .output-card {
   background: #1e1e1e;
   border-radius: 8px;
@@ -495,6 +489,67 @@ body {
   white-space: pre;
   margin: 0;
   background: #1e1e1e;
+}
+
+/* Output Section Layout */
+.output-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 32px;
+}
+
+/* Explanation Card */
+.explanation-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.explanation-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #f3f2f1;
+  border-bottom: 1px solid var(--border);
+}
+
+.explanation-card__header svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.explanation-card__header span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.explanation-card__content {
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Loading Spinner */
+.btn-generate:disabled {
+  background: var(--primary-dark);
+  cursor: wait;
+  opacity: 0.9;
+}
+
+.btn-generate .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Responsive */

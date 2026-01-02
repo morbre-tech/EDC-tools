@@ -157,6 +157,19 @@
                 <pre class="output-code" id="script-output"># Udfyld felterne til venstre og klik "Generér PowerShell script"
 # Dit script vises her...</pre>
               </div>
+
+              <!-- Explanation Card -->
+              <div class="explanation-card" id="explanation-card" style="display: none;">
+                <div class="explanation-card__header">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                  <span>Forklaring</span>
+                </div>
+                <div class="explanation-card__content" id="explanation-content"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -199,6 +212,7 @@
     </div>
 
     <script>
+      // Navigation
       document.querySelectorAll('.accordion__link[data-page]').forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -220,57 +234,99 @@
         });
       });
 
-      // Generate script
-      document.getElementById('generate-btn')?.addEventListener('click', () => {
-        const desc = document.getElementById('task-description').value || 'Eksempel opgave';
-        const envRadio = document.querySelector('input[name="environment"]:checked');
-        const env = envRadio ? envRadio.nextElementSibling.textContent : 'On-premises';
+      // Generate script via API
+      document.getElementById('generate-btn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('generate-btn');
         const output = document.getElementById('script-output');
+        const explanationCard = document.getElementById('explanation-card');
+        const explanationContent = document.getElementById('explanation-content');
 
-        output.textContent = `# PowerShell Script Generator
-# Opgave: ${desc}
-# Miljø: ${env}
-# Genereret: ${new Date().toLocaleString('da-DK')}
+        const prompt = document.getElementById('task-description').value;
+        const envRadio = document.querySelector('input[name="environment"]:checked');
+        const environment = envRadio ? envRadio.nextElementSibling.textContent : 'On-premises';
 
-param(
-    [Parameter(Mandatory=$true)]
-    [string]$InputPath,
+        const options = {
+          whatIf: document.getElementById('include-whatif').checked,
+          logging: document.getElementById('include-logging').checked,
+          validation: document.getElementById('include-validation').checked,
+          tryCatch: document.getElementById('include-trycatch').checked
+        };
 
-    [Parameter()]
-    [switch]$WhatIf
-)
-
-#Requires -Version 5.1
-
-try {
-    Write-Host "Starting script execution..." -ForegroundColor Cyan
-
-    # Validering
-    if (-not (Test-Path $InputPath)) {
-        throw "Filen findes ikke: $InputPath"
-    }
-
-    # Hovedlogik
-    $data = Import-Csv -Path $InputPath
-    foreach ($item in $data) {
-        if ($WhatIf) {
-            Write-Host "[WhatIf] Behandler: $($item.Name)" -ForegroundColor Yellow
-        } else {
-            Write-Host "Behandler: $($item.Name)" -ForegroundColor Green
+        if (!prompt || prompt.trim().length === 0) {
+          output.textContent = '# Fejl: Indtast venligst en opgavebeskrivelse';
+          return;
         }
-    }
 
-    Write-Host "Script fuldført!" -ForegroundColor Green
-} catch {
-    Write-Error $_.Exception.Message
-    exit 1
-}`;
+        // Show loading state
+        btn.disabled = true;
+        btn.innerHTML = `
+          <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="32">
+              <animate attributeName="stroke-dashoffset" dur="1s" values="32;0" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+          Genererer script...
+        `;
+        output.textContent = '# Genererer script med AI...\n# Dette kan tage 10-30 sekunder...';
+        explanationCard.style.display = 'none';
+
+        try {
+          const response = await fetch('/api/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt, environment, options })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Ukendt fejl');
+          }
+
+          // Show script
+          output.textContent = data.script;
+
+          // Show explanation
+          if (data.explanation) {
+            explanationCard.style.display = 'block';
+            explanationContent.innerHTML = data.explanation.replace(/\n/g, '<br>');
+          }
+
+        } catch (error) {
+          output.textContent = `# Fejl ved generering af script\n# ${error.message}\n\n# Prøv igen eller kontakt support.`;
+          console.error('Generate error:', error);
+        } finally {
+          // Reset button
+          btn.disabled = false;
+          btn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Generér PowerShell script
+          `;
+        }
       });
 
       // Copy to clipboard
-      document.getElementById('copy-script')?.addEventListener('click', () => {
+      document.getElementById('copy-script')?.addEventListener('click', async () => {
         const code = document.getElementById('script-output').textContent;
-        navigator.clipboard.writeText(code);
+        const btn = document.getElementById('copy-script');
+
+        try {
+          await navigator.clipboard.writeText(code);
+          const originalText = btn.innerHTML;
+          btn.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Kopieret!
+          `;
+          setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+        } catch (err) {
+          console.error('Copy failed:', err);
+        }
       });
 
       // Download script
@@ -280,7 +336,7 @@ try {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'script.ps1';
+        a.download = 'generated-script.ps1';
         a.click();
         URL.revokeObjectURL(url);
       });
